@@ -13,9 +13,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main","intentional-vulnerable"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main","intentional-vulnerable"]
   schedule:
     - cron: '21 6 * * 5'
 
