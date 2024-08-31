@@ -13,7 +13,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - 'feature/**'  # Matches any branch that starts with "feature/"
   pull_request:
     branches:
       - main
