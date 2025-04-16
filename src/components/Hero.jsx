@@ -10,13 +10,12 @@ const Hero = () => {
 			</div>
 			<div className='w-full flex justify-center items-center flex-col'>
 				<h1 className='head_text'>
-					<span className='orange_gradient '>Doctalyzer</span>
+					<span className='orange_gradient '></span>
 					<br />
 					<span className='description'>Analyze Medical Reports</span>
 				</h1>
 				<h2 className='desc'>
-					The tool to analyze medical reports, empowering you to make informed
-					decisions about your health journey.
+				The medical report analysis tool that gives you the ability to make well-informed decisions regarding your health journey.
 				</h2>
 			</div>
 		</>

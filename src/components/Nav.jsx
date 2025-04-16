@@ -9,16 +9,6 @@ const Nav = () => {
 			<Link to='/'>
 				<img src={logo} alt='sumz_logo' className='logo object-contain' />
 			</Link>
-
-			<button
-				type='button'
-				onClick={() =>
-					window.open("https://github.com/open-xyz/doctalyzer", "_blank")
-				}
-				className='black_btn'
-			>
-				GitHub
-			</button>
 		</nav>
 	)
 }
