@@ -36,7 +36,7 @@ export default function Ocr() {
 
   const summarizeText = async (text) => {
     try {
-      const response = await fetch("http://127.0.0.1:11434/api/generate", {
+      const response = await fetch("https://medical-report-analyzer-production-274b.up.railway.app/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
