@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import Nav from "./Nav";
-import Tesseract from "tesseract.js"; // Import Tesseract.js
+import Tesseract from "tesseract.js";
 
 export default function Ocr() {
   const [image, setImage] = useState(null);
@@ -11,7 +11,6 @@ export default function Ocr() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -20,11 +19,12 @@ export default function Ocr() {
     }
   };
 
-  // Extract text using Tesseract.js
   const extractTextFromImage = async (image) => {
     try {
-      const { data: { text } } = await Tesseract.recognize(image, "eng", {
-        logger: (m) => console.log(m), // Optional logger
+      const {
+        data: { text },
+      } = await Tesseract.recognize(image, "eng", {
+        logger: (m) => console.log(m),
       });
       return text.trim();
     } catch (error) {
@@ -34,7 +34,6 @@ export default function Ocr() {
     }
   };
 
-  // Summarize text using Ollama API
   const summarizeText = async (text) => {
     try {
       const response = await fetch("http://127.0.0.1:11434/api/generate", {
@@ -43,8 +42,8 @@ export default function Ocr() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "mistral", // Change model if needed
-          prompt: `Summarize the following text:\n\n${text}`,
+          model: "mistral",
+          prompt: `Explain this medical report in simple bullet points for a patient:\n\n${text}\n\n-`,
           stream: false,
         }),
       });
@@ -58,7 +57,6 @@ export default function Ocr() {
     }
   };
 
-  // Handle image processing and text extraction
   const processImage = async (event) => {
     event.preventDefault();
     if (!image) {
@@ -105,14 +103,24 @@ export default function Ocr() {
               className="group relative mt-2 flex h-72 cursor-pointer flex-col items-center justify-center rounded-md border border-gray-300 bg-white shadow-sm transition-all hover:bg-gray-50"
             >
               {preview ? (
-                <img src={preview} alt="Uploaded" className="h-full w-full object-contain rounded-md" />
+                <img
+                  src={preview}
+                  alt="Uploaded"
+                  className="h-full w-full object-contain rounded-md"
+                />
               ) : (
                 <div className="absolute z-[5] h-full w-full rounded-md flex items-center justify-center text-gray-500">
                   Click to upload
                 </div>
               )}
             </label>
-            <input onChange={handleImageUpload} id="image-upload" type="file" accept="image/*" className="hidden" />
+            <input
+              onChange={handleImageUpload}
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+            />
           </div>
 
           <button
@@ -141,7 +149,11 @@ export default function Ocr() {
           {error ? (
             <p style={{ color: "red" }}>{error}</p>
           ) : (
-            <p>{isLoading ? "Generating summary..." : summary}</p>
+            <ul className="list-disc list-inside text-left whitespace-pre-line">
+              {summary.split("- ").filter(Boolean).map((item, idx) => (
+                <li key={idx}>{item.trim()}</li>
+              ))}
+            </ul>
           )}
         </div>
       </div>
