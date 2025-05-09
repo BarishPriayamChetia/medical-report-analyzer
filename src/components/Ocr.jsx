@@ -11,8 +11,6 @@ export default function Ocr() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -39,7 +37,7 @@ export default function Ocr() {
 
   const summarizeText = async (text) => {
     try {
-      const response = await fetch(`${backendUrl}/api/summarize`, {
+      const response = await fetch("http://localhost:3001/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
@@ -148,9 +146,7 @@ export default function Ocr() {
           {error ? (
             <p className="text-red-500">{error}</p>
           ) : (
-            <p className="whitespace-pre-line">
-              {isLoading ? "Processing..." : text || "No text extracted yet."}
-            </p>
+            <p className="whitespace-pre-line">{isLoading ? "Processing..." : text || "No text extracted yet."}</p>
           )}
         </div>
 
@@ -169,6 +165,6 @@ export default function Ocr() {
       </div>
 
       <Footer />
-    </>
-  );
+    </>
+  );
 }
