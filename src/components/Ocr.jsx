@@ -37,7 +37,7 @@ export default function Ocr() {
 
   const summarizeText = async (text) => {
     try {
-      const response = await fetch("http://localhost:3001/api/summarize", {
+      const response = await fetch("https://medical-report-analyzer-2.onrender.com/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
